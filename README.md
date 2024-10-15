@@ -47,4 +47,56 @@ npx supabase start
 
 5. View the local Supabase Studio on  http://localhost:54323
 
+6. Link local installation to remote Supabase project
+
+First login
+
+```bash
+npx supabase link
+```
+
+Then link the project
+
+```bash
+npx supabase link --project-ref dlpldhwoanpxumzendmg
+```
+
+7. Get remote schema
+
+```bash
+npx supabase db pull
+```
+
+8. Run migrations fromm pull to freshly reset local database that is then built from scratch
+
+```bash
+npx supabase db reset
+```
+Now the local database is reset and the remote schema is pulled in.
+
+9. To verify that the local database is in sync with the remote database, you can use the following command:
+
+```bash
+npx supabase db diff
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
