@@ -3,6 +3,8 @@ Repo for handling database, migrations, etc
 
 ## Normal operations
 
+### Start and stop local Supabase server
+
 Start the local Supabase server
 
 ```bash
@@ -15,7 +17,25 @@ Stop the local Supabase server
 npx supabase stop
 ```
 
+### Resetting local database to what is in migrations
 
+```bash
+npx supabase db reset
+```
+
+### Detect changes and create migrations
+
+Create a new migration file with any detected changes to the local database included
+
+```bash
+npx supabase migration new
+```
+
+Run local migrations that have not yet been run. 
+
+```bash
+npx supabase migration up
+```
 
 
 
@@ -55,7 +75,7 @@ First login
 npx supabase link
 ```
 
-Then link the project
+Then link the local project to the remote project
 
 ```bash
 npx supabase link --project-ref dlpldhwoanpxumzendmg
