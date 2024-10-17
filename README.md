@@ -5,7 +5,7 @@ Repo for handling database, migrations, etc
 
 ### Start and stop local Supabase server
 
-Start the local Supabase server
+Start the local Supabase server. The normal Supabase interface is typically accessed at http://localhost:54323
 
 ```bash
 npx supabase start
@@ -25,10 +25,16 @@ npx supabase db reset
 
 ### Detect changes and create migrations
 
-Create a new migration file with any detected changes to the local database included
+Create a new migration file 
 
 ```bash
 npx supabase migration new
+```
+
+Create a new migration file with any detected changes to the local database included
+
+```bash 
+npx supabase db diff | npx supabase migration new name_of_new_migration
 ```
 
 Run local migrations that have not yet been run. 
