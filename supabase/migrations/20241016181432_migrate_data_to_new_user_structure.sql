@@ -2,9 +2,9 @@
 insert into "public"."persons" (tmp_customer_id)
     select id from "public"."customers";
 
--- create users 
-insert into "public"."users" (tmp_customer_id, person_id)
-    select tmp_customer_id, id from "public"."persons";
+-- create users - take over the old customer_id as the new user.id
+insert into "public"."users" (id, tmp_customer_id, person_id)
+    select tmp_customer_id, tmp_customer_id, id from "public"."persons";
 
 -- enrich users with config
 update "public"."users" 
