@@ -23,6 +23,8 @@ insert into "public"."persons" (tmp_customer_id, opt_auth_id)
     select id, auth_user_id from "public"."customers";
 
 -- then create a Helper for each Person
-insert into "public"."helpers" (person_id, tmp_customer_id)
-    select id, tmp_customer_id from "public"."persons"
-    where tmp_customer_id is not null;
+insert into "public"."helpers" (person_id, user_id, tmp_customer_id)
+    select p.id, u.id, p.tmp_customer_id 
+    from "public"."persons" p
+    inner join "public"."users" u on p.tmp_customer_id = u.tmp_customer_id
+    where p.tmp_customer_id is not null;

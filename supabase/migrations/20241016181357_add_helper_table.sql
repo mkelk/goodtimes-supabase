@@ -8,8 +8,6 @@ create table "public"."helpers" (
 );
 
 
-alter table "public"."helpers" enable row level security;
-
 alter table "public"."helperroles" drop column "person_id";
 
 alter table "public"."helperroles" add column "helper_id" uuid;
