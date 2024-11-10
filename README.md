@@ -51,9 +51,10 @@ npx supabase migration up
 4. Make sure the local database is in sync with the remote database by running `npx supabase db diff --linked` and `npx supabase migration list`. If any problems, resolve them before continuing.
 4. Make the changes to the database schema - typically in supabase studio (but it could also be done in a migration file created by hand and run, which then covers 5. and 6.)
 5. Create a new migration file with any detected changes to the local database included `npx supabase db diff | npx supabase migration new name_of_new_migration`
-6. Run the local migrations up to the latest `npx supabase migration up`
-7. Reset the local database to the latest remote database schema `npx supabase db reset`
-8. Adapt application logic, if needed, in the main app repo 
+6. Run the local migrations up to the latest `npx supabase migration up` (only if you have written the migration file by hand)
+7. Reset the local database to the latest database schema `npx supabase db reset`
+8. Think very carefully about the implications of the changes you have made in terms of which versions of the PWA the users will experience while the system (DB + code) moves to the final new version of both the DB and the code.
+9. Adapt application logic, if needed, in the main app repo 
 10. Simultaneously push the changes to the remote database (`npx supabase db push`) and push the corresponding app changes to the main app repo and do appropriate deployment.
 
 
