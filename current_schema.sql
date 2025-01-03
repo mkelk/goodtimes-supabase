@@ -80,6 +80,16 @@ CREATE TYPE "public"."helperroletypes" AS ENUM (
 
 ALTER TYPE "public"."helperroletypes" OWNER TO "postgres";
 
+
+CREATE TYPE "public"."wizard_status" AS ENUM (
+    'not_relevant',
+    'in_progress',
+    'done'
+);
+
+
+ALTER TYPE "public"."wizard_status" OWNER TO "postgres";
+
 SET default_tablespace = '';
 
 SET default_table_access_method = "heap";
@@ -222,11 +232,30 @@ CREATE TABLE IF NOT EXISTS "public"."persons" (
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
     "opt_auth_id" "uuid",
     "firstname" "text" NOT NULL,
-    "lastname" "text" NOT NULL
+    "lastname" "text" NOT NULL,
+    "email" "text"
 );
 
 
 ALTER TABLE "public"."persons" OWNER TO "postgres";
+
+
+CREATE TABLE IF NOT EXISTS "public"."start_wizard_status" (
+    "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
+    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "overall_status" "public"."wizard_status" DEFAULT 'not_relevant'::"public"."wizard_status" NOT NULL,
+    "done_at" timestamp without time zone,
+    "calendar_status" "public"."wizard_status" DEFAULT 'not_relevant'::"public"."wizard_status" NOT NULL,
+    "calendar_done_at" timestamp without time zone,
+    "album_status" "public"."wizard_status" DEFAULT 'not_relevant'::"public"."wizard_status" NOT NULL,
+    "album_done_at" timestamp without time zone,
+    "jigsaw_status" "public"."wizard_status" DEFAULT 'not_relevant'::"public"."wizard_status" NOT NULL,
+    "jigsaw_done_at" timestamp without time zone,
+    "user_id" "uuid" NOT NULL
+);
+
+
+ALTER TABLE "public"."start_wizard_status" OWNER TO "postgres";
 
 
 CREATE TABLE IF NOT EXISTS "public"."users" (
@@ -287,6 +316,11 @@ ALTER TABLE ONLY "public"."logs"
 
 ALTER TABLE ONLY "public"."persons"
     ADD CONSTRAINT "persons_pkey" PRIMARY KEY ("id");
+
+
+
+ALTER TABLE ONLY "public"."start_wizard_status"
+    ADD CONSTRAINT "start_wizard_status_pkey" PRIMARY KEY ("id");
 
 
 
@@ -352,6 +386,11 @@ ALTER TABLE ONLY "public"."imagegames"
 
 ALTER TABLE ONLY "public"."persons"
     ADD CONSTRAINT "persons_opt_auth_id_fkey" FOREIGN KEY ("opt_auth_id") REFERENCES "auth"."users"("id") ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY "public"."start_wizard_status"
+    ADD CONSTRAINT "start_wizard_status_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
@@ -667,6 +706,12 @@ GRANT ALL ON SEQUENCE "public"."logs_id_seq" TO "service_role";
 GRANT ALL ON TABLE "public"."persons" TO "anon";
 GRANT ALL ON TABLE "public"."persons" TO "authenticated";
 GRANT ALL ON TABLE "public"."persons" TO "service_role";
+
+
+
+GRANT ALL ON TABLE "public"."start_wizard_status" TO "anon";
+GRANT ALL ON TABLE "public"."start_wizard_status" TO "authenticated";
+GRANT ALL ON TABLE "public"."start_wizard_status" TO "service_role";
 
 
 
