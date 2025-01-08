@@ -7,8 +7,6 @@ create table "public"."invites" (
 );
 
 
-alter table "public"."invites" enable row level security;
-
 CREATE UNIQUE INDEX invites_pkey ON public.invites USING btree (id);
 
 alter table "public"."invites" add constraint "invites_pkey" PRIMARY KEY using index "invites_pkey";
