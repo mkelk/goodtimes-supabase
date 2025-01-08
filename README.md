@@ -56,6 +56,7 @@ npx supabase migration up
 8. Think very carefully about the implications of the changes you have made in terms of which versions of the PWA the users will experience while the system (DB + code) moves to the final new version of both the DB and the code.
 9. Adapt application logic, if needed, in the main app repo 
 10. Simultaneously push the changes to the remote database (`npx supabase db push`) and push the corresponding app changes to the main app repo and do appropriate deployment.
+11. Create a dump of the current schema with `npx supabase db dump --local > current_schema.sql` to update `current_schema.sql` and move it to `prompts/current_schema.sql` in the main app repo.
 
 
 
