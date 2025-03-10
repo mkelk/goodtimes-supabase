@@ -87,9 +87,13 @@ npx supabase start
 
 5. View the local Supabase Studio on  http://localhost:54323
 
-6. Link local installation to remote Supabase project
+6. Login to remote supabase from the Supabase CLI
+```
+npx supabase login
+```
 
-First login
+7. Link local installation to remote Supabase project
+
 
 ```bash
 npx supabase link
